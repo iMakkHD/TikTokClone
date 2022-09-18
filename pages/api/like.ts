@@ -9,15 +9,15 @@ res: NextApiResponse ) {
 
     const data = 
         like ? await client
-        .patch(postId)
-        .setIfMissing({ likes: [] })
-        .insert('after', 'likes[-1]', [
-            {
-                _key: uuid(),
-                _ref: userId,
-            },
-        ])
-        .commit()
+            .patch(postId)
+            .setIfMissing({ likes: [] })
+            .insert('after', 'likes[-1]', [
+                {
+                    _key: uuid(),
+                    _ref: userId,
+                }
+            ])
+            .commit()
         : await client
             .patch(postId)
             .unset([`likes[_ref=="${userId}"]`])
